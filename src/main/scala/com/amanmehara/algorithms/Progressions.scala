@@ -7,7 +7,7 @@ object Progressions {
 
   def arithmeticProgression (terms: Int): (Double, Double) => List[BigDecimal] = {
     (firstTerm, commonDifference) => {
-      (0 to terms).map(term => firstTerm + term * BigDecimal(commonDifference)).toList
+      (1 to terms).map(term => firstTerm + (term - 1) * BigDecimal(commonDifference)).toList
     }
   }
 
@@ -19,7 +19,7 @@ object Progressions {
 
   def arithmeticProgressionSumFormula (terms: Int): (Double, Double) => BigDecimal = {
     (firstTerm, commonDifference) => {
-      terms / 2 * (2 * BigDecimal(firstTerm) + (terms - 1) * BigDecimal(commonDifference))
+      terms / BigDecimal(2) * (2 * BigDecimal(firstTerm) + (terms - 1) * BigDecimal(commonDifference))
     }
   }
 
@@ -27,7 +27,7 @@ object Progressions {
     (firstTerm, commonRatio) => {
       commonRatio match {
         case 0 => None
-        case _ => Option((0 to terms).map(term => firstTerm * BigDecimal(commonRatio).pow(term)).toList)
+        case _ => Option((1 to terms).map(term => firstTerm * BigDecimal(commonRatio).pow(term - 1)).toList)
       }
     }
   }
@@ -35,7 +35,7 @@ object Progressions {
   def geometricProgressionSum (terms: Int): (Double, Double) => Option[BigDecimal] = {
     (firstTerm, commonRatio) => {
       geometricProgression(terms)(firstTerm,commonRatio) match {
-        case Some(s) => Some(s.sum)
+        case Some(s) => Option(s.sum)
         case None => None
       }
     }
@@ -53,7 +53,7 @@ object Progressions {
 
   def geometricProgressionInfiniteSumFormula (firstTerm: Double, commonRatio: Double) : Option[BigDecimal] = {
     commonRatio match {
-      case x if x > -1 && x < 1 => Some(BigDecimal(firstTerm)./(1 - BigDecimal(commonRatio)))
+      case x if x > -1 && x < 1 && x != 0 => Option(BigDecimal(firstTerm)./(1 - BigDecimal(commonRatio)))
       case _ => None
     }
   }

@@ -1,6 +1,13 @@
-name := "algorithms-scala"
+import sbt.Keys.scalaVersion
 
-version := "1.0"
+val scalactic = "org.scalactic" %% "scalactic" % "3.0.1"
+val scalatest = "org.scalatest" %% "scalatest" % "3.0.1" % "test"
 
-scalaVersion := "2.12.2"
-        
+lazy val root = (project in file("."))
+  .settings(
+    name := "algorithms-scala",
+    version := "1.0",
+    scalaVersion := "2.12.2",
+    libraryDependencies += scalactic,
+    libraryDependencies += scalatest
+  )
